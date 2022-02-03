@@ -39,13 +39,13 @@
 		<div class="container-login100">
 			<div class="wrap-login100">
 				<div class="login100-pic js-tilt" data-tilt align="center">
-					<img src="images/logo.ICO" alt="IMG">
+					<img src="images/logos.ico" alt="IMG">
 
 				</div>
 
 				<form class="login100-form validate-form" method="POST" action="">
 				<span class="login100-form-title">
-						Booking Admin
+						Librairie Admin
 					</span>
 
 					<div class="wrap-input100 validate-input" data-validate = "nom d'utilisateur obligatoire" align="center">
@@ -119,7 +119,7 @@
 					 
 
 					<div class="text-center p-t-50">
-						<a class="txt2" href="#">
+						<a class="txt2" href="../">
 							Aller à la page d'accueil
 							<i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
 						</a>

@@ -172,10 +172,6 @@ include '../php/connexion.php';
                     <input type="text" class="form-control" name="title">
                   </div>
                   <div class="form-group">
-                    <label>Auteur :</label>
-                    <input type="text" class="form-control" name="auteur">
-                  </div>
-                  <div class="form-group">
                     <label>catégorie :</label>
                     <?php
                     $sql = $bdd->prepare("SELECT * FROM categorie");

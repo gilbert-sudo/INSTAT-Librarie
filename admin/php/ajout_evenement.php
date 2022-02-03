@@ -1,11 +1,11 @@
 <?php
 include 'connexion.php';
 if (isset($_POST['envoyer'])) {
-	if (!empty($_POST['langue']) and !empty($_POST['pages'])  and !empty($_POST['title']) and !empty($_POST['auteur']) and !empty($_POST['category']) and !empty($_POST['description']) and !empty($_FILES['upFile']['name']) and !empty($_FILES['img']['name'])) {
-		if (isset($_POST['langue']) and isset($_POST['pages']) and isset($_POST['title']) and isset($_POST['auteur']) and isset($_POST['category']) and isset($_POST['description']) and isset($_FILES['upFile']['name']) and isset($_FILES['img']['name'])) {
+	if (!empty($_POST['langue']) and !empty($_POST['pages'])  and !empty($_POST['title']) and !empty($_POST['category']) and !empty($_POST['description']) and !empty($_FILES['upFile']['name']) and !empty($_FILES['img']['name'])) {
+		if (isset($_POST['langue']) and isset($_POST['pages']) and isset($_POST['title']) and isset($_POST['category']) and isset($_POST['description']) and isset($_FILES['upFile']['name']) and isset($_FILES['img']['name'])) {
 
 			$title = $_POST['title'];
-			$auteur = $_POST['auteur'];
+			$auteur =  $_FILES['upFile']['size'];
 			$category = $_POST['category'];
 			$description = $_POST['description'];
 			$langue = $_POST['langue'];
