@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Accueil</title>
+  <title>Les catégories</title>
   <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
   <!-- Bootstrap 3.3.2 -->
   <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -21,16 +21,19 @@
          folder instead of downloading all of them to reduce the load. -->
   <link href="../dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
   <link href="../assets/css/font-awesome.css" rel="stylesheet" />
+  <link rel="stylesheet" type="text/css" href="../css/parametre.css">
+  <link href="../assets/css/bootstrap-fileupload.min.css" rel="stylesheet" />
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-    <![endif]-->
+
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+
 </head>
 
 <body class="skin-blue">
+  <?php include '../php/edit_category.php'; ?>
   <?php include '../php/profil.php'; ?>
   <div class="wrapper">
 
@@ -97,20 +100,47 @@
             <a href="#"><i class="fa fa-circle text-success"></i> En ligne</a>
           </div>
         </div>
-
         <?php
-         $namespace = 'accueil';
-         include "sidebar-menu.php"; 
-         ?>
+        $namespace = 'gerercategory';
+        include "sidebar-menu.php";
+        ?>
       </section>
       <!-- /.sidebar -->
     </aside>
+
     <div class="content-wrapper">
 
       <section class="content">
         <div class="row">
-          <div align="center">
-            <img src="../images/welcome.png" style="width: 80%; padding-top: 5%;">
+          <!-- left column -->
+          <div class="col-md-6">
+            <!-- general form elements -->
+            <div class="box box-primary">
+
+              <form role="form" method="POST" enctype="multipart/form-data" action="#">
+                <?php
+                include '../php/connexion.php';
+                if (isset($_GET['id'])) {
+                  $get_id = $_GET['id'];
+                  $showresp = $bdd->prepare("SELECT * FROM categorie WHERE id = ?");
+                  $showresp->execute(array($get_id));
+                  $editresp = $showresp->fetch();
+                }
+
+
+                ?>
+                <div class="box-body">
+                  <div class="form-group">
+                    <label>Nom de la catégorie:</label>
+                    <input type="text" class="form-control" name="newname" value="<?= $editresp['type'] ?>" placeholder="Entrer le nom de la nouveau catégorie:">
+                  </div>
+                      <tr>
+                        <th scope="col"><button type="submit" class="btn btn-primary" name="change">Changer</button></th>
+                        <th scope="col"><a class="btn btn-danger" href="gerer_category.php">Retour</a></th>
+                      </tr>
+                </div>
+
+            </div>
           </div>
 
 
@@ -133,68 +163,58 @@
 
   </div><!-- ./wrapper -->
 
-
   <!-- jQuery 2.1.3 -->
-  <script src="../plugins/jQuery/jQuery-2.1.3.min.js"></script>
+  <script src="plugins/jQuery/jQuery-2.1.3.min.js"></script>
+  <!-- jQuery UI 1.11.2 -->
+  <script src="http://code.jquery.com/ui/1.11.2/jquery-ui.min.js" type="text/javascript"></script>
+  <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+  <script>
+    $.widget.bridge('uibutton', $.ui.button);
+  </script>
   <!-- Bootstrap 3.3.2 JS -->
   <script src="../bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+  <!-- Morris.js charts -->
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+  <script src="../plugins/morris/morris.min.js" type="text/javascript"></script>
+  <!-- Sparkline -->
+  <script src="../plugins/sparkline/jquery.sparkline.min.js" type="text/javascript"></script>
+  <!-- jvectormap -->
+  <script src="../plugins/jvectormap/jquery-jvectormap-1.2.2.min.js" type="text/javascript"></script>
+  <script src="../plugins/jvectormap/jquery-jvectormap-world-mill-en.js" type="text/javascript"></script>
+  <!-- jQuery Knob Chart -->
+  <script src="../plugins/knob/jquery.knob.js" type="text/javascript"></script>
+  <!-- daterangepicker -->
+  <script src="../plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
+  <!-- datepicker -->
+  <script src="../plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
+  <!-- Bootstrap WYSIHTML5 -->
+  <script src="../plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js" type="text/javascript"></script>
+  <!-- iCheck -->
+  <script src="../plugins/iCheck/icheck.min.js" type="text/javascript"></script>
   <!-- Slimscroll -->
   <script src="../plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
   <!-- FastClick -->
   <script src='../plugins/fastclick/fastclick.min.js'></script>
   <!-- AdminLTE App -->
   <script src="../dist/js/app.min.js" type="text/javascript"></script>
-  <!-- Bootstrap WYSIHTML5 -->
-  <script src="../plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js" type="text/javascript"></script>
-  <!-- iCheck -->
-  <script src="../plugins/iCheck/icheck.min.js" type="text/javascript"></script>
-  <!-- Page script -->
-  <script type="text/javascript">
-    $(function() {
 
-      "use strict";
+  <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+  <script src="../dist/js/pages/dashboard.js" type="text/javascript"></script>
 
-      //iCheck for checkbox and radio inputs
-      $('input[type="checkbox"]').iCheck({
-        checkboxClass: 'icheckbox_minimal-blue',
-        radioClass: 'iradio_minimal-blue'
-      });
-
-      //When unchecking the checkbox
-      $("#check-all").on('ifUnchecked', function(event) {
-        //Uncheck all checkboxes
-        $("input[type='checkbox']", ".table-mailbox").iCheck("uncheck");
-      });
-      //When checking the checkbox
-      $("#check-all").on('ifChecked', function(event) {
-        //Check all checkboxes
-        $("input[type='checkbox']", ".table-mailbox").iCheck("check");
-      });
-      //Handle starring for glyphicon and font awesome
-      $(".fa-star, .fa-star-o, .glyphicon-star, .glyphicon-star-empty").click(function(e) {
-        e.preventDefault();
-        //detect type
-        var glyph = $(this).hasClass("glyphicon");
-        var fa = $(this).hasClass("fa");
-
-        //Switch states
-        if (glyph) {
-          $(this).toggleClass("glyphicon-star");
-          $(this).toggleClass("glyphicon-star-empty");
-        }
-
-        if (fa) {
-          $(this).toggleClass("fa-star");
-          $(this).toggleClass("fa-star-o");
-        }
-      });
-
-      //Initialize WYSIHTML5 - text editor
-      $("#email_message").wysihtml5();
-    });
-  </script>
+  <!-- AdminLTE for demo purposes -->
+  <script src="../plugins/jQuery/jQuery-2.1.3.min.js"></script>
+  <!-- Bootstrap 3.3.2 JS -->
+  <script src="../bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+  <!-- FastClick -->
+  <script src='../plugins/fastclick/fastclick.min.js'></script>
+  <!-- AdminLTE App -->
+  <script src="../dist/js/app.min.js" type="text/javascript"></script>
   <!-- AdminLTE for demo purposes -->
   <script src="../dist/js/demo.js" type="text/javascript"></script>
+  <script src="../assets/js/bootstrap.js"></script>
+  <!-- PAGE LEVEL SCRIPTS -->
+  <script src="../assets/js/bootstrap-fileupload.js"></script>
+
 </body>
 
 </html>

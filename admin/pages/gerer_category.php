@@ -1,9 +1,10 @@
+<?php ?>
 <!DOCTYPE html>
 <html>
 
 <head>
   <meta charset="UTF-8">
-  <title>Accueil</title>
+  <title>Les catégories</title>
   <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
   <!-- Bootstrap 3.3.2 -->
   <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -21,6 +22,9 @@
          folder instead of downloading all of them to reduce the load. -->
   <link href="../dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
   <link href="../assets/css/font-awesome.css" rel="stylesheet" />
+  <link rel="stylesheet" type="text/css" href="../css/parametre.css">
+  <link href="../assets/css/bootstrap-fileupload.min.css" rel="stylesheet" />
+
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -31,6 +35,16 @@
 </head>
 
 <body class="skin-blue">
+  <?php
+
+  include '../php/connexion.php';
+
+  $reqresp = $bdd->prepare("SELECT * FROM categorie");
+  $reqresp->execute();
+
+  ?>
+
+
   <?php include '../php/profil.php'; ?>
   <div class="wrapper">
 
@@ -97,104 +111,88 @@
             <a href="#"><i class="fa fa-circle text-success"></i> En ligne</a>
           </div>
         </div>
-
         <?php
-         $namespace = 'accueil';
+         $namespace = 'gerercategory';
          include "sidebar-menu.php"; 
          ?>
       </section>
       <!-- /.sidebar -->
     </aside>
+
     <div class="content-wrapper">
 
       <section class="content">
         <div class="row">
-          <div align="center">
-            <img src="../images/welcome.png" style="width: 80%; padding-top: 5%;">
-          </div>
+          <div class="col-xs-12">
+            <div class="box">
+              <div class="box-header">
+                <h3 class="box-title"><b>Gérer les catégories</b></h3>
+              </div><!-- /.box-header -->
+              <div class="box-body">
+                <table id="example2" class="table table-bordered table-hover">
+
+                  <thead>
+                    <tr>
+                      <th>Noms</th>
+                      <th>Option</th>
 
 
-        </div>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php
+                    while ($afresp = $reqresp->fetch()) { ?>
+                      <tr>
+                        <td><?= $afresp['type']; ?></td>
+                        <td style="width: 20%;">
+                          <div>
+                            <table>
+                              <tbody>
+                                <td>
+                                  <a class="btn btn-danger" onclick="return window.confirm('En êtes vous vraiment sûre?');" href="../php/del_category.php?id=<?= $afresp['id']; ?>"><i class="glyphicon glyphicon-trash"></i></a><br>
+                                </td>
+                                <td>
+                                  <a class="btn btn-primary" style="margin: 0px 10px;" href="edit_category.php?id=<?= $afresp['id']; ?>"><i class="fa fa-edit"></i></a>
+                                </td>
+                              </tbody>
+                            </table>
+                          </div>
+                        </td>
+                      </tr>
 
-        </form>
+                    <?php } ?>
+
+                  </tbody>
 
 
+                </table>
 
 
+              </div><!-- /.box-body -->
+            </div><!-- /.box -->
 
-    </div><!-- /.box-body -->
-  </div><!-- /.box -->
-  </div>
-  <!--/.col (right) -->
-  </div> <!-- /.row -->
-  </section><!-- /.content -->
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </section><!-- /.content -->
+    </div><!-- /.content-wrapper -->
 
-  </div><!-- /.content-wrapper -->
 
   </div><!-- ./wrapper -->
-
 
   <!-- jQuery 2.1.3 -->
   <script src="../plugins/jQuery/jQuery-2.1.3.min.js"></script>
   <!-- Bootstrap 3.3.2 JS -->
   <script src="../bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-  <!-- Slimscroll -->
-  <script src="../plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
   <!-- FastClick -->
   <script src='../plugins/fastclick/fastclick.min.js'></script>
   <!-- AdminLTE App -->
   <script src="../dist/js/app.min.js" type="text/javascript"></script>
-  <!-- Bootstrap WYSIHTML5 -->
-  <script src="../plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js" type="text/javascript"></script>
-  <!-- iCheck -->
-  <script src="../plugins/iCheck/icheck.min.js" type="text/javascript"></script>
-  <!-- Page script -->
-  <script type="text/javascript">
-    $(function() {
-
-      "use strict";
-
-      //iCheck for checkbox and radio inputs
-      $('input[type="checkbox"]').iCheck({
-        checkboxClass: 'icheckbox_minimal-blue',
-        radioClass: 'iradio_minimal-blue'
-      });
-
-      //When unchecking the checkbox
-      $("#check-all").on('ifUnchecked', function(event) {
-        //Uncheck all checkboxes
-        $("input[type='checkbox']", ".table-mailbox").iCheck("uncheck");
-      });
-      //When checking the checkbox
-      $("#check-all").on('ifChecked', function(event) {
-        //Check all checkboxes
-        $("input[type='checkbox']", ".table-mailbox").iCheck("check");
-      });
-      //Handle starring for glyphicon and font awesome
-      $(".fa-star, .fa-star-o, .glyphicon-star, .glyphicon-star-empty").click(function(e) {
-        e.preventDefault();
-        //detect type
-        var glyph = $(this).hasClass("glyphicon");
-        var fa = $(this).hasClass("fa");
-
-        //Switch states
-        if (glyph) {
-          $(this).toggleClass("glyphicon-star");
-          $(this).toggleClass("glyphicon-star-empty");
-        }
-
-        if (fa) {
-          $(this).toggleClass("fa-star");
-          $(this).toggleClass("fa-star-o");
-        }
-      });
-
-      //Initialize WYSIHTML5 - text editor
-      $("#email_message").wysihtml5();
-    });
-  </script>
   <!-- AdminLTE for demo purposes -->
   <script src="../dist/js/demo.js" type="text/javascript"></script>
+  <script src="../assets/js/bootstrap.js"></script>
+  <!-- PAGE LEVEL SCRIPTS -->
+  <script src="../assets/js/bootstrap-fileupload.js"></script>
+
 </body>
 
 </html>

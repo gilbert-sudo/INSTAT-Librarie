@@ -1,5 +1,6 @@
 <?php
 session_start();
+include '../php/profil.php';
 ?>
 <!DOCTYPE html>
 <html>
@@ -24,7 +25,6 @@ session_start();
          folder instead of downloading all of them to reduce the load. -->
   <link href="../dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
   <link href="../assets/css/font-awesome.css" rel="stylesheet" />
-
   <link href="../assets/css/bootstrap-fileupload.min.css" rel="stylesheet" />
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -36,9 +36,7 @@ session_start();
 </head>
 
 <body class="skin-blue">
-  <?php include '../php/profil.php'; ?>
   <div class="wrapper">
-
     <header class="main-header">
       <a href="#" class="logo"><b><?= $showprofil['username_admin']; ?></b></a>
       <!-- Header Navbar: style can be found in header.less -->
@@ -98,58 +96,13 @@ session_start();
           </div>
           <div class="pull-left info">
             <p><?= $showprofil['username_admin']; ?></p>
-
             <a href="#"><i class="fa fa-circle text-success"></i> En ligne</a>
           </div>
         </div>
-        <ul class="sidebar-menu">
-
-
-          <li class="treeview">
-            <a href="accueil.php">
-              <i class="fa fa-home"></i> <span>Accueil</span>
-            </a>
-
-          </li>
-
-          <li class="treeview">
-            <a href="#">
-              <i class="glyphicon glyphicon-folder-close"></i>
-              <span>Gestion des catégories</span>
-              <i class="fa fa-angle-left pull-right"></i>
-            </a>
-            <ul class="treeview-menu">
-              <li><a href="ad_responsable.php"><i class="fa fa-user"></i>Ajouter un catégorie</a></li>
-              <li><a href="gerer_resp.php"><i class="fa fa-group"></i>Gérer les catégories</a></li>
-            </ul>
-          </li>
-
-          <li class="treeview">
-            <a href="#">
-              <i class="glyphicon glyphicon-folder-close"></i>
-              <span>Gestion des livres</span>
-              <i class="fa fa-angle-left pull-right"></i>
-            </a>
-            <ul class="treeview-menu">
-              <li><a href="ad_event.php"><i class="fa fa-globe"></i>Ajouter un livre</a></li>
-              <li><a href="gerer_event.php"><i class="fa fa-star"></i>Gérer les livres</a></li>
-            </ul>
-          </li>
-
-
-          <li class="active treeview">
-            <a href="#">
-              <i class="fa fa-gear"></i>
-              <span>Paramètres</span>
-              <i class="fa fa-angle-left pull-right"></i>
-            </a>
-            <ul class="treeview-menu">
-              <li class="active"><a href="p_general.php"><i class="glyphicon glyphicon-wrench"></i> General</a></li>
-              <li><a href="contact.php"><i class="glyphicon glyphicon-paperclip"></i>Contact</a></li>
-              <li><a href="../php/logout.php"><i class="glyphicon glyphicon-log-out"></i> Deconnexion</a></li>
-            </ul>
-          </li>
-        </ul>
+        <?php
+        $namespace = 'general';
+        include "sidebar-menu.php";
+        ?>
       </section>
       <!-- /.sidebar -->
     </aside>
@@ -158,10 +111,7 @@ session_start();
   <div class="content-wrapper">
 
     <section class="content">
-
-
       <h3 class="box-title"><b>Paramètres</b></h3>
-
       <div class="row">
         <div class="col-md-6">
           <!-- Default box -->
@@ -188,7 +138,6 @@ session_start();
                 <button class="btn btn-block btn-primary btn-s" style="width: 100px;" name="ok">Changer</button><br>
                 <?php
                 include '../php/connexion.php';
-
                 if (isset($_POST['ok'])) {
                   if (!empty($_POST['newnom'])) {
                     $newnom = $_POST['newnom'];
@@ -246,15 +195,10 @@ session_start();
                   <label>Mot de passe actuel</label><br><input type="password" class="form-control" name="mdp" placeholder="****************"><br>
                   <label>Nouveau mot de passe</label><br><input type="password" class="form-control" name="nmdp" placeholder="****************"><br>
                   <label>Confirmer le mot de passe</label><br><input type="password" class="form-control" name="cnmdp" placeholder="****************"><br>
-                  <button class="btn btn-block btn-primary btn-sm" style="width: 100px;margin-top: 45px;" name="change">Changer</button><br>
+                  <button class="btn btn-block btn-primary" name="change">Changer le mot de passe</button><br>
                   <?php
-                  include '../php/connexion.php';
-
-
                   if (isset($_POST['change'])) {
                     if (!empty($_POST['mdp'])) {
-
-
 
                       $passwordash = sha1($_POST['mdp']);
 
@@ -293,18 +237,13 @@ session_start();
                       $msgmena = " <b> Veuillez entrer votre mot de passe❗</b>";
                     }
                   }
-
-
-
                   ?>
-
                 </form>
                 <?php include '../php/error.php'; ?>
               </div>
             </div>
           </div><!-- /.box -->
         </div>
-
       </div><!-- /.box -->
 
   </div>

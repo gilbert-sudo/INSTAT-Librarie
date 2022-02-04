@@ -1,9 +1,10 @@
 <?php
 session_start();
+include '../php/profil.php';
 ?>
+
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="UTF-8">
     <title>Paramètres</title>
@@ -24,21 +25,12 @@ session_start();
          folder instead of downloading all of them to reduce the load. -->
     <link href="../dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
     <link href="../assets/css/font-awesome.css" rel="stylesheet" />
-
     <link href="../assets/css/bootstrap-fileupload.min.css" rel="stylesheet" />
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-    <![endif]-->
 </head>
 
 <body class="skin-blue">
-    <?php include '../php/profil.php'; ?>
     <div class="wrapper">
-
         <header class="main-header">
             <a href="#" class="logo"><b><?= $showprofil['username_admin']; ?></b></a>
             <!-- Header Navbar: style can be found in header.less -->
@@ -58,30 +50,24 @@ session_start();
                                 <i class="fa fa-envelope-o"></i>
                                 <span class="label label-success">4</span>
                             </a>
-
                         </li>
-
                         <li class="dropdown notifications-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="fa fa-bell-o"></i>
                                 <span class="label label-warning">10</span>
                             </a>
-
                         </li>
                         <li class="dropdown tasks-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="fa fa-flag-o"></i>
                                 <span class="label label-danger">9</span>
                             </a>
-
                         </li>
-
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <img src="../images/admin/<?= $showprofil['image_admin']; ?>" class="user-image" alt="User Image" />
                                 <span class="hidden-xs"><?= $showprofil['username_admin']; ?></span>
                             </a>
-
                         </li>
                     </ul>
                 </div>
@@ -98,58 +84,13 @@ session_start();
                     </div>
                     <div class="pull-left info">
                         <p><?= $showprofil['username_admin']; ?></p>
-
                         <a href="#"><i class="fa fa-circle text-success"></i> En ligne</a>
                     </div>
                 </div>
-                <ul class="sidebar-menu">
-
-
-                    <li class="treeview">
-                        <a href="accueil.php">
-                            <i class="fa fa-home"></i> <span>Accueil</span>
-                        </a>
-
-                    </li>
-
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="glyphicon glyphicon-folder-close"></i>
-                            <span>Gestion des catégories</span>
-                            <i class="fa fa-angle-left pull-right"></i>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a href="ad_responsable.php"><i class="fa fa-user"></i>Ajouter un catégorie</a></li>
-                            <li><a href="gerer_resp.php"><i class="fa fa-group"></i>Gérer les catégories</a></li>
-                        </ul>
-                    </li>
-
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="glyphicon glyphicon-folder-close"></i>
-                            <span>Gestion des livres</span>
-                            <i class="fa fa-angle-left pull-right"></i>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a href="ad_event.php"><i class="fa fa-globe"></i>Ajouter un livre</a></li>
-                            <li><a href="gerer_event.php"><i class="fa fa-star"></i>Gérer les livres</a></li>
-                        </ul>
-                    </li>
-
-
-                    <li class="active treeview">
-                        <a href="#">
-                            <i class="fa fa-gear"></i>
-                            <span>Paramètres</span>
-                            <i class="fa fa-angle-left pull-right"></i>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a href="p_general.php"><i class="glyphicon glyphicon-wrench"></i> General</a></li>
-                            <li class="active"><a href="contact.php"><i class="glyphicon glyphicon-paperclip"></i>Contact</a></li>
-                            <li><a href="../php/logout.php"><i class="glyphicon glyphicon-log-out"></i> Deconnexion</a></li>
-                        </ul>
-                    </li>
-                </ul>
+                <?php
+                $namespace = 'contact';
+                include "sidebar-menu.php";
+                ?>
             </section>
             <!-- /.sidebar -->
         </aside>
@@ -177,7 +118,7 @@ session_start();
                                 <label>LinkedIn:</label><br><input type="text" class="form-control" name="fb" placeholder=" LinkedIn"><br>
                                 <label>Twiter:</label><br><input type="text" class="form-control" name="fb" placeholder=" Twiter"><br>
                                 <label>Pinterest:</label><br><input type="text" class="form-control" name="fb" placeholder=" Pinterest"><br>
-                                <button style="margin-left: 20px;" type="enregistrer" class="btn btn-primary" name="valider">Enregistrer</button>
+                                <button style="margin-left: 20px;" type="enregistrer" class="btn btn-primary" name="valider">Actualiser mes contact</button>
                                 <?php include '../php/contact.php';
                                 include '../php/error.php'; ?>
                             </form>
