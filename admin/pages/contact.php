@@ -1,10 +1,15 @@
 <?php
-session_start();
+include 'secure_access.php'; // include this file on all secure pages
 include '../php/profil.php';
+$query = "SELECT * FROM contact WHERE 1;";
+$result = $bdd->prepare($query);
+$result->execute();
+$contact = $result->fetch();
 ?>
 
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <title>Paramètres</title>
@@ -111,19 +116,23 @@ include '../php/profil.php';
                             <h3 class="box-title">Changer vos contacts</h3>
                         </div>
                         <div class="box-body">
-                            <form method="POST" enctype="multipart/form-data" action="#">
-                                <label>N° téléphone:</label><br><input type="text" class="form-control" name="phone" placeholder="n° téléphone"><br>
-                                <label>Adresse Email:</label><br><input type="text" class="form-control" name="email" placeholder="Email"><br>
-                                <label>Facebook:</label><br><input type="text" class="form-control" name="fb" placeholder=" facebook"><br>
-                                <label>LinkedIn:</label><br><input type="text" class="form-control" name="fb" placeholder=" LinkedIn"><br>
-                                <label>Twiter:</label><br><input type="text" class="form-control" name="fb" placeholder=" Twiter"><br>
-                                <label>Pinterest:</label><br><input type="text" class="form-control" name="fb" placeholder=" Pinterest"><br>
-                                <button style="margin-left: 20px;" type="enregistrer" class="btn btn-primary" name="valider">Actualiser mes contact</button>
-                                <?php include '../php/contact.php';
-                                include '../php/error.php'; ?>
+                            <form method="POST" enctype="multipart/form-data" action="../php/contact.php">
+                                <label>N° téléphone:</label><br><input type="text" class="form-control" value="<?=$contact['tel'];?>" name="phone" placeholder="n° téléphone"><br>
+                                <label>Adresse Email:</label><br><input type="text" class="form-control" value="<?=$contact['email'];?>" name="email" placeholder="Email"><br>
+                                <label>Facebook:</label><br><input type="text" class="form-control" value="<?=$contact['facebook'];?>" name="facebook" placeholder="Lien vers votre profile facebook"><br>
+                                <label>LinkedIn:</label><br><input type="text" class="form-control" value="<?=$contact['linkedin'];?>" name="linkedin" placeholder="Lien vers votre profile LinkedIn"><br>
+                                <label>Twiter:</label><br><input type="text" class="form-control" value="<?=$contact['twiter'];?>" name="twiter" placeholder="Lien vers votre profile Twiter"><br>
+                                <label>Instagram:</label><br><input type="text" class="form-control" value="<?=$contact['instagram'];?>" name="instagram" placeholder="Lien vers votre profile Instagram"><br>
+                                <label>Votre site web:</label><br><input type="text" class="form-control" value="<?=$contact['siteweb'];?>" name="siteweb" placeholder="Lien vers votre site web"><br>
+                                <button style="margin-left: 20px;" type="submit" class="btn btn-primary" name="valider">Actualiser mes contact</button>
                             </form>
                         </div>
-
+                        <?php if(isset($_GET['success'])): ?>
+                        <div class="alert alert-success alert-dismissible">
+                            <button type="button" class="close" data-dismiss="alert" style="color: white;">×</button>
+                         <h4>Toutes les modifications ont bien été effectuées avec succès.</h4>
+                        </div>
+                        <?php endif; ?>
                     </div><!-- /.box -->
                 </div>
 

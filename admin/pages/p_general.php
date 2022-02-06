@@ -1,5 +1,5 @@
-<?php
-session_start();
+<?php 
+include 'secure_access.php';
 include '../php/profil.php';
 ?>
 <!DOCTYPE html>

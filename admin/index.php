@@ -34,7 +34,7 @@
 <body>
 	
 	<!-- <?php include 'php/connexion.php'; 
-			include 'php/login.php'; ?> -->
+			?> -->
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100">
@@ -43,13 +43,13 @@
 
 				</div>
 
-				<form class="login100-form validate-form" method="POST" action="">
+				<form class="login100-form validate-form" method="POST" action="php/login.php">
 				<span class="login100-form-title">
 						Librairie Admin
 					</span>
 
 					<div class="wrap-input100 validate-input" data-validate = "nom d'utilisateur obligatoire" align="center">
-						<input class="input100" type="text" name="usernameadmin" placeholder="Nom d'utilisateur">
+						<input class="input100" type="text" name="usernameadmin" placeholder="Nom d'utilisateur" required>
 						<span class="focus-input100"></span>
 						<span class="symbol-input100">
 							<i class="fa fa-user" aria-hidden="true"></i>
@@ -57,7 +57,7 @@
 					</div>
 
 					<div class="wrap-input100 validate-input" data-validate = "Veuillez entrer votre mot de passe" align="center">
-						<input class="input100 passadmin" type="password" name="passadmin" placeholder="Mot de passe">
+						<input class="input100 passadmin" type="password" name="passadmin" placeholder="Mot de passe" required>
 						<span class="focus-input100"></span>
 						
 						<span class="symbol-input100">
@@ -99,9 +99,11 @@
 						<button class="login100-form-btn" name="connect">
 							Se connecter
 						</button>
-						<?php include 'php/login.php'; 
+						<?php 
+						if (isset($_GET['error'])) {
+							$msgmena = $_GET['error'];
+						}
 						include 'php/error.php';
-
 						?>
 					
 					</div>

@@ -1,3 +1,6 @@
+<?php
+include 'secure_access.php';
+?>
 <!DOCTYPE html>
 <html>
 
@@ -99,15 +102,16 @@
         </div>
 
         <?php
-         $namespace = 'accueil';
-         include "sidebar-menu.php"; 
-         ?>
+        $namespace = 'accueil';
+        include "sidebar-menu.php";
+        ?>
       </section>
       <!-- /.sidebar -->
     </aside>
     <div class="content-wrapper">
 
       <section class="content">
+
         <div class="row">
           <div align="center">
             <img src="../images/welcome.png" style="width: 80%; padding-top: 5%;">

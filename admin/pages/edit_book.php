@@ -1,4 +1,5 @@
-<?php
+<?php 
+include 'secure_access.php';
 $page = $_GET['page'];
 if (isset($_GET['mm'])) {
   $msgmena = $_GET['mm'];

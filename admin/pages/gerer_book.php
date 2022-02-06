@@ -1,4 +1,5 @@
-<?php
+<?php 
+include 'secure_access.php'; 
 include '../php/connexion.php';
 $db = $bdd;
 // pagination

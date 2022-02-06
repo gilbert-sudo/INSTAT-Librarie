@@ -1,4 +1,5 @@
 <?php
+include 'secure_access.php';
 include '../php/connexion.php';
 include '../php/profil.php';
 ?>

@@ -1,3 +1,6 @@
+<?php 
+include 'secure_access.php'; 
+?>
 <!DOCTYPE html>
 <html>
 
