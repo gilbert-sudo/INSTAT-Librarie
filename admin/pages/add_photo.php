@@ -1,0 +1,261 @@
+<?php
+include 'secure_access.php';
+?>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Les actualités</title>
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    <!-- Bootstrap 3.3.2 -->
+    <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <!-- Font Awesome Icons -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <!-- Ionicons -->
+    <link href="http://code.ionicframework.com/ionicons/2.0.0/css/ionicons.min.css" rel="stylesheet" type="text/css" />
+    <!-- bootstrap wysihtml5 - text editor -->
+    <link href="../plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css" rel="stylesheet" type="text/css" />
+    <!-- iCheck for checkboxes and radio inputs -->
+    <link href="../plugins/iCheck/minimal/blue.css" rel="stylesheet" type="text/css" />
+    <!-- Theme style -->
+    <link href="../dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
+    <!-- AdminLTE Skins. Choose a skin from the css/skins 
+         folder instead of downloading all of them to reduce the load. -->
+    <link href="../dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
+    <link href="../assets/css/font-awesome.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="../css/parametre.css">
+    <link href="../assets/css/bootstrap-fileupload.min.css" rel="stylesheet" />
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+
+</head>
+
+<body class="skin-blue">
+    <?php include '../php/profil.php';
+    $error = (isset($_GET['error'])) ? $_GET['error'] : '';
+    if ($error == '1') {
+        $error = '<div class="alert alert-success alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        <h5><i class="icon fa fa-check"></i> Succès!</h5>
+        Votre photo a bien été ajouter avec succès.
+        </div>';
+    } elseif ($error == '2') {
+        $error = '<div class="alert alert-danger alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        <h5><i class="icon fa fa-ban"></i> Erreur!</h5>
+        Format d\'image invalide, elle doit être au format (\'jpg\', \'gif\', \'jpeg\', \'png\')
+        </div>';
+    } elseif ($error == '3') {
+        $error = '<div class="alert alert-info alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        <h5><i class="icon fa fa-exclamation-circle"></i> Info!</h5>
+        Cette photo éxiste déjà.
+        </div>';
+    } else {
+        $error = '';
+    }
+    function isComplete()
+    {
+       global $bdd;
+         $req = $bdd->prepare('SELECT * FROM carousel');
+            $req->execute();
+            $count = $req->rowCount();
+            if ($count < 6) {
+                $res = false;
+            } else {
+                $res = true;
+            }
+            //disable button if complete    
+            if ($res == true) {
+                echo 'disabled';
+            } else {
+                echo '';
+            }
+            
+    }
+    ?>
+    <div class="wrapper">
+
+        <header class="main-header">
+            <a href="#" class="logo"><b><?= $showprofil['username_admin']; ?></b></a>
+            <!-- Header Navbar: style can be found in header.less -->
+            <nav class="navbar navbar-static-top" role="navigation">
+                <!-- Sidebar toggle button-->
+                <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </a>
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
+                        <!-- Messages: style can be found in dropdown.less-->
+                        <li class="dropdown messages-menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-envelope-o"></i>
+                                <span class="label label-success">4</span>
+                            </a>
+
+                        </li>
+
+                        <li class="dropdown notifications-menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-bell-o"></i>
+                                <span class="label label-warning">10</span>
+                            </a>
+
+                        </li>
+                        <li class="dropdown tasks-menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-flag-o"></i>
+                                <span class="label label-danger">9</span>
+                            </a>
+
+                        </li>
+
+                        <li class="dropdown user user-menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <img src="../images/admin/<?= $showprofil['image_admin']; ?>" class="user-image" alt="User Image" />
+                                <span class="hidden-xs"><?= $showprofil['username_admin']; ?></span>
+                            </a>
+
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <!-- Left side column. contains the logo and sidebar -->
+        <aside class="main-sidebar">
+            <!-- sidebar: style can be found in sidebar.less -->
+            <section class="sidebar">
+                <!-- Sidebar user panel -->
+                <div class="user-panel">
+                    <div class="pull-left image">
+                        <img src="../images/admin/<?= $showprofil['image_admin']; ?>" class="img-circle" alt="User Image" />
+                    </div>
+                    <div class="pull-left info">
+                        <p><?= $showprofil['username_admin']; ?></p>
+
+                        <a href="#"><i class="fa fa-circle text-success"></i> En ligne</a>
+                    </div>
+                </div>
+                <?php
+                $namespace = 'addphoto';
+                include "sidebar-menu.php";
+                ?>
+            </section>
+            <!-- /.sidebar -->
+        </aside>
+
+        <div class="content-wrapper">
+
+            <section class="content">
+                <div class="row">
+                    <!-- left column -->
+                    <div class="col-md-6">
+                        <!-- general form elements -->
+                        <div class="box box-primary">
+
+                            <form role="form" method="POST" enctype="multipart/form-data" action="../php/add_photo.php">
+                                <div class="box-body">
+
+                                    <div class="form-group" style="margin-top:27px;">
+                                        <label class="control-label col-lg-4">Image</label>
+                                        <div class="fileupload fileupload-new" data-provides="fileupload">
+                                            <div class="fileupload-preview thumbnail" style="width: 200px; height: 150px;"></div>
+                                            <div>
+                                                <span class="btn btn-file btn-success"><span class="fileupload-new">Selectionner image</span><span class="fileupload-exists">Remplacer</span><input type="file" name="img"></span>
+                                                <a href="#" class="btn btn-danger fileupload-exists" data-dismiss="fileupload">Enlever</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div style="margin-top: 10px; margin-left:3px;">
+                                        <button type="submit" class="btn btn-primary" name="envoyer" <?php isComplete(); ?>>Ajouter</button><br><br>
+                                        <?php include '../php/add_category.php'; ?>
+                                        <?= $error ?>
+                                    </div>
+
+                                </div>
+
+                        </div>
+                    </div>
+
+
+                    </form>
+
+
+
+
+
+                </div><!-- /.box-body -->
+        </div><!-- /.box -->
+    </div>
+    <!--/.col (right) -->
+    </div> <!-- /.row -->
+    </section><!-- /.content -->
+
+    </div><!-- /.content-wrapper -->
+
+    </div><!-- ./wrapper -->
+
+    <!-- jQuery 2.1.3 -->
+    <script src="plugins/jQuery/jQuery-2.1.3.min.js"></script>
+    <!-- jQuery UI 1.11.2 -->
+    <script src="http://code.jquery.com/ui/1.11.2/jquery-ui.min.js" type="text/javascript"></script>
+    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+    <script>
+        $.widget.bridge('uibutton', $.ui.button);
+    </script>
+    <!-- Bootstrap 3.3.2 JS -->
+    <script src="../bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <!-- Morris.js charts -->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="../plugins/morris/morris.min.js" type="text/javascript"></script>
+    <!-- Sparkline -->
+    <script src="../plugins/sparkline/jquery.sparkline.min.js" type="text/javascript"></script>
+    <!-- jvectormap -->
+    <script src="../plugins/jvectormap/jquery-jvectormap-1.2.2.min.js" type="text/javascript"></script>
+    <script src="../plugins/jvectormap/jquery-jvectormap-world-mill-en.js" type="text/javascript"></script>
+    <!-- jQuery Knob Chart -->
+    <script src="../plugins/knob/jquery.knob.js" type="text/javascript"></script>
+    <!-- daterangepicker -->
+    <script src="../plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
+    <!-- datepicker -->
+    <script src="../plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
+    <!-- Bootstrap WYSIHTML5 -->
+    <script src="../plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js" type="text/javascript"></script>
+    <!-- iCheck -->
+    <script src="../plugins/iCheck/icheck.min.js" type="text/javascript"></script>
+    <!-- Slimscroll -->
+    <script src="../plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+    <!-- FastClick -->
+    <script src='../plugins/fastclick/fastclick.min.js'></script>
+    <!-- AdminLTE App -->
+    <script src="../dist/js/app.min.js" type="text/javascript"></script>
+
+    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+    <script src="../dist/js/pages/dashboard.js" type="text/javascript"></script>
+
+    <!-- AdminLTE for demo purposes -->
+    <script src="../plugins/jQuery/jQuery-2.1.3.min.js"></script>
+    <!-- Bootstrap 3.3.2 JS -->
+    <script src="../bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <!-- FastClick -->
+    <script src='../plugins/fastclick/fastclick.min.js'></script>
+    <!-- AdminLTE App -->
+    <script src="../dist/js/app.min.js" type="text/javascript"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="../dist/js/demo.js" type="text/javascript"></script>
+    <script src="../assets/js/bootstrap.js"></script>
+    <!-- PAGE LEVEL SCRIPTS -->
+    <script src="../assets/js/bootstrap-fileupload.js"></script>
+
+</body>
+
+</html>

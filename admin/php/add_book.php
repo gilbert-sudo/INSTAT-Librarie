@@ -27,7 +27,7 @@ if (isset($_POST['envoyer'])) {
 					$insertimg = move_uploaded_file($_FILES['upFile']['tmp_name'], $chemin2);
 
 					$req = $bdd->prepare("INSERT INTO `products` (`PID`, `title`, `author`, `category`, `description`, `language`, `page`, `new`, `publishAt`, `img`, `pdf`) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
-					$req->execute(array($title, $auteur, $category, $description, $langue, $pages, 1, date('Y-m-d'), $_FILES['img']['name'], $_FILES['upFile']['name']));
+					$req->execute(array($title, $auteur, $category, $description, $langue, $pages, 0, date('Y-m-d'), $_FILES['img']['name'], $_FILES['upFile']['name']));
 
 					$msgmaintso = "<b> Le livre a bien été publié <i class='fa fa-check-circle'></i> </b>";
 				} else {

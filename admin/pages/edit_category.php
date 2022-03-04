@@ -1,5 +1,12 @@
-<?php 
-include 'secure_access.php'; 
+<?php
+include 'secure_access.php';
+include '../php/connexion.php';
+if (isset($_GET['id'])) {
+  $get_id = $_GET['id'];
+  $showcatresp = $bdd->prepare("SELECT * FROM categorie WHERE id = ?");
+  $showcatresp->execute(array($get_id));
+  $editresp = $showcatresp->fetch();
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -36,7 +43,6 @@ include 'secure_access.php';
 </head>
 
 <body class="skin-blue">
-  <?php include '../php/edit_category.php'; ?>
   <?php include '../php/profil.php'; ?>
   <div class="wrapper">
 
@@ -120,27 +126,17 @@ include 'secure_access.php';
             <!-- general form elements -->
             <div class="box box-primary">
 
-              <form role="form" method="POST" enctype="multipart/form-data" action="#">
-                <?php
-                include '../php/connexion.php';
-                if (isset($_GET['id'])) {
-                  $get_id = $_GET['id'];
-                  $showresp = $bdd->prepare("SELECT * FROM categorie WHERE id = ?");
-                  $showresp->execute(array($get_id));
-                  $editresp = $showresp->fetch();
-                }
+              <form role="form" method="POST" enctype="multipart/form-data" action="../php/edit_category.php?old_cat=<?= $editresp['type'] ?>&id=<?= $get_id ?>">
 
-
-                ?>
                 <div class="box-body">
                   <div class="form-group">
                     <label>Nom de la catégorie:</label>
                     <input type="text" class="form-control" name="newname" value="<?= $editresp['type'] ?>" placeholder="Entrer le nom de la nouveau catégorie:">
                   </div>
-                      <tr>
-                        <th scope="col"><button type="submit" class="btn btn-primary" name="change">Changer</button></th>
-                        <th scope="col"><a class="btn btn-danger" href="gerer_category.php">Retour</a></th>
-                      </tr>
+                  <tr>
+                    <th scope="col"><button type="submit" class="btn btn-primary" name="change">Changer</button></th>
+                    <th scope="col"><a class="btn btn-danger" href="gerer_category.php">Retour</a></th>
+                  </tr>
                 </div>
 
             </div>

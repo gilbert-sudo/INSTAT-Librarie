@@ -1,5 +1,5 @@
-<?php 
-include 'secure_access.php'; 
+<?php
+include 'secure_access.php';
 include '../php/connexion.php';
 $db = $bdd;
 // pagination
@@ -21,8 +21,24 @@ if (isset($_GET['page']) and !empty($_GET['page']) and $_GET['page'] > 0 and $_G
 $begin = ($currentPage - 1) * $itemsPerPage;
 $reqevent = $bdd->prepare("SELECT * FROM products  LIMIT $begin,$itemsPerPage");
 $reqevent->execute();
-include '../php/profil.php';
 //end pagination
+include '../php/profil.php';
+
+//get top 4 number
+$getfavori = $bdd->prepare("SELECT COUNT(PID) FROM products WHERE new = 1");
+$getfavori->execute();
+$getfavori = $getfavori->fetch();
+
+//check top list
+function isTop($id)
+{
+  global $bdd;
+  $getfavori = $bdd->prepare("SELECT new FROM products WHERE PID = ?");
+  $getfavori->execute(array($id));
+  $top_state = $getfavori->fetch();
+  $response = ($top_state[0] == 1)? true : false;
+  return $response;
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -121,14 +137,13 @@ include '../php/profil.php';
           </div>
           <div class="pull-left info">
             <p><?= $showprofil['username_admin']; ?></p>
-
             <a href="#"><i class="fa fa-circle text-success"></i> En ligne</a>
           </div>
         </div>
         <?php
-         $namespace = 'gererbook';
-         include "sidebar-menu.php"; 
-         ?>
+        $namespace = 'gererbook';
+        include "sidebar-menu.php";
+        ?>
       </section>
       <!-- /.sidebar -->
     </aside>
@@ -145,6 +160,7 @@ include '../php/profil.php';
                 <table id="example2" class="table table-bordered table-hover">
                   <thead>
                     <tr>
+                      <th>ID</th>
                       <th>Images</th>
                       <th>Titre</th>
                       <th>Catégorie</th>
@@ -154,15 +170,25 @@ include '../php/profil.php';
                   </thead>
                   <tbody>
                     <?php
+                    $top_book = ($getfavori[0]);
                     while ($afevent = $reqevent->fetch()) { ?>
                       <tr>
-                        <td style="text-align: center;"><a href="read.php?name=<?= $afevent['pdf']; ?>" target="__BLANK"><img style="width: 140px; height: 120px;" src="../images/books/<?= $afevent['img']; ?>"></a></td>
-                        <td style="padding-top:40px;"><a style="text-decoration: none;color:black;" href="read.php?name=<?= $afevent['pdf']; ?>" target="__BLANK"><?= $afevent['title']; ?></a></td>
-                        <td style="padding-top:40px;"><?= $afevent['category']; ?></td>
+                        <td>
+                          <H3>#<?= $afevent['PID']; ?></H3>
+                        </td>
+                        <td style="text-align: center;"><a title="Lire ce livre" href="read.php?name=<?= $afevent['pdf']; ?>" target="__BLANK"><img style="width: 140px; height: 140px;" src="../images/books/<?= $afevent['img']; ?>"></a></td>
+                        <td style="padding-top:40px;"><strong><a title="Voir les détails sur ce livre" style="text-decoration: none;color:black;" href="read.php?name=<?= $afevent['pdf']; ?>" target="__BLANK"><?= $afevent['title']; ?></a></strong></td>
+                        <td style="padding-top:40px;"><?= $afevent['category'];?></td>
                         <td style="padding-top:40px;"><?= $afevent['page']; ?></td>
                         <td>
-                          <div style="margin-top: 16px;"><a class="btn btn-block btn-danger" onclick="return window.confirm('Êtes vous sûre de suprimmer ce livre?');" href="../php/del_book.php?id_book=<?= $afevent['PID']; ?>"><i class="glyphicon glyphicon-trash"></i></a><br>
-                            <a class="btn btn-block btn-primary" href="edit_book.php?id_event=<?= $afevent['PID']; ?>&page=<?= $currentPage; ?>"><i class="fa fa-edit"></i></a>
+                          <div style="margin-top: 16px;">
+                            <a title="Editer ce livre" class="btn btn-block btn-primary" href="edit_book.php?id_event=<?= $afevent['PID']; ?>&page=<?= $currentPage; ?>"><i class="fa fa-edit"></i></a>
+                            <?php if ($top_book < 4) { ?>
+                              <a title="Ajouter aux tops 4" class="btn btn-block btn-warning" href="../php/top_book.php?id=<?= $afevent['PID']; ?>&page=<?= $currentPage; ?>&action=ajouter"><i class="fa fa-star"></i></a>
+                            <?php } else { ?>
+                              <br>
+                            <?php } ?>
+                            <a title="Supprimer ce livre" class="btn btn-block btn-danger" onclick="return window.confirm('Êtes vous sûre de suprimmer ce livre?');" href="../php/del_book.php?id_book=<?= $afevent['PID']; ?>"><i class="glyphicon glyphicon-trash"></i></a>
                           </div>
                         </td>
                       </tr>

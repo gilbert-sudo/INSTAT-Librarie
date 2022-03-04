@@ -191,8 +191,8 @@ include '../php/profil.php';
                 <div class="fileupload fileupload-new" data-provides="fileupload">
                   <div class="fileupload-preview thumbnail" style="width: 200px; height: 150px;"></div>
                   <div>
-                    <span class="btn btn-file btn-success"><span class="fileupload-new">Select image</span><span class="fileupload-exists">Change</span><input type="file" name="img"></span>
-                    <a href="#" class="btn btn-danger fileupload-exists" data-dismiss="fileupload">Remove</a>
+                    <span class="btn btn-file btn-success"><span class="fileupload-new">Selectionner image</span><span class="fileupload-exists">Remplacer</span><input type="file" name="img"></span>
+                    <a href="#" class="btn btn-danger fileupload-exists" data-dismiss="fileupload">Enlever</a>
                   </div>
                 </div>
               </div>
