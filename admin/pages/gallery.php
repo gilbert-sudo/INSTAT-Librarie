@@ -251,7 +251,7 @@ $count = count($carousel);
                 <div class="alert alert-primary alert-dismissible">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                     <h5><i class="icon fa fa-frown-o"></i> Aucune photo!</h5>
-                   Veuillez d'abord ajouter des photos.
+                    Veuillez d'abord ajouter des photos.
                 </div>
             <?php } ?>
             <div id="myModal" class="modal">
@@ -264,6 +264,7 @@ $count = count($carousel);
 
     </div>
     <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js'></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script type='text/javascript' src=''></script>
     <script type='text/javascript'>
         // Get the modal
@@ -299,8 +300,26 @@ $count = count($carousel);
     </script>
     <script>
         function delFromCarousel(id) {
-            location.href = "../php/delFromCarousel.php?id=" + id;
+            swal({
+                    title: "Êtes-vous sûr?",
+                    text: "Une fois supprimé, vous ne pourrez plus le récupérer!",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        location.href = "../php/delFromCarousel.php?id=" + id;
+                    } else {
+                        swal("Vous avez annulé la suppression!");
+                    }
+                });
         }
+        <?php if (isset($_GET['del_success'])) { ?>
+            swal("Poof! Votre fichier photo a été supprimé!", {
+                icon: "success",
+            });
+        <?php } ?>
     </script>
 </body>
 

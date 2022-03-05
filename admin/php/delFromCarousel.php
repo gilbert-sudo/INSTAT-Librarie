@@ -10,5 +10,5 @@ if (isset($_GET['id'])) {
 	unlink('../images/carousel/'.$donnees['img']);
 	$delevent = $bdd->prepare("DELETE FROM `carousel` WHERE id = ? ;");
 	$delevent->execute(array($_GET['id']));
-	header('Location:../pages/gallery.php');
+	header('Location:../pages/gallery.php?del_success=1');
 }

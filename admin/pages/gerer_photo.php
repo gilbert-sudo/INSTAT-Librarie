@@ -143,7 +143,7 @@ function isTop($id)
 
             <section class="content">
                 <div class="row">
-                    <object data="gallery.php" width="100%" height="720px"></object>
+                    <object data="gallery.php" width="100%" height="570px"></object>
                 </div><!-- /.row -->
             </section><!-- /.content -->
 
