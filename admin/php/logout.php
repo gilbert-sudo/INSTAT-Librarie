@@ -14,4 +14,10 @@ $contact = $fetch_contact->fetch();
 $contact = json_encode($contact);
 file_put_contents('../contact.json', $contact);
 
+//fetches the carousel information from the database
+$fetch_carousel = $bdd->query('SELECT * FROM carousel');
+$carousel = $fetch_carousel->fetchAll();
+$carousel = json_encode($carousel);
+file_put_contents('../carousel.json', $carousel);
+
 header('Location: ../index.php');
